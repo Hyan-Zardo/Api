@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class OrderService {
+public class PurchaseOrderService {
 
     @Autowired
     private OrderRepository orderRepository;
