@@ -1,6 +1,7 @@
 package com.projeto.apibiblioteca.services;
 
 import com.projeto.apibiblioteca.entities.Book;
+import com.projeto.apibiblioteca.enums.BookConservation;
 import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.records.BookRecord;
 import com.projeto.apibiblioteca.repositories.BookRepository;
@@ -48,8 +49,11 @@ public class BookService {
         }
     }
 
-    public List<BookRecord> searchBooks(String title, String category, String author) {
-        List<Book> books = bookRepository.findByTitleOrCategoryOrAuthor(title, category, author);
+    public List<BookRecord> searchBooks(String title, String category, String author, BookConservation conservation, Integer quantity) {
+        List<Book> books = bookRepository.findByTitleOrCategoryOrAuthorOrConservationOrQuantity(title, category, author, conservation, quantity);
+        if (books.isEmpty()){
+            throw new NotFoundException("Livro não encontrado");
+        }
         return books.stream().map(BookMapper.INSTANCE::toBookRecord).collect(Collectors.toList());
     }
 

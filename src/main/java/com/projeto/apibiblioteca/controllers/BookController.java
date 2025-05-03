@@ -1,6 +1,7 @@
 package com.projeto.apibiblioteca.controllers;
 
 import com.projeto.apibiblioteca.entities.Book;
+import com.projeto.apibiblioteca.enums.BookConservation;
 import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.records.BookRecord;
 import com.projeto.apibiblioteca.repositories.BookRepository;
@@ -47,13 +48,15 @@ public class BookController {
     public ResponseEntity<List<BookRecord>> searchBooks(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) String author) {
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) BookConservation conservation,
+            @RequestParam(required = false) Integer quantity){
 
-        return ResponseEntity.ok(service.searchBooks(title, category, author));
+        return ResponseEntity.ok(service.searchBooks(title, category, author, conservation, quantity));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletBook(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") UUID id){
         service.deleteBook(id);
         return ResponseEntity.noContent().build();
     }

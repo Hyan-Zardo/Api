@@ -11,4 +11,6 @@ public interface BookMapper {
 
     BookRecord toBookRecord(Book book);
     Book toBook(BookRecord bookRecord);
+
+
 }

@@ -1,11 +1,11 @@
 package com.projeto.apibiblioteca.services;
 
 import com.projeto.apibiblioteca.entities.Book;
-import com.projeto.apibiblioteca.entities.RentOrder;
+import com.projeto.apibiblioteca.entities.PurchaseOrder;
 import com.projeto.apibiblioteca.entities.User;
 import com.projeto.apibiblioteca.records.OrderRequest;
 import com.projeto.apibiblioteca.repositories.BookRepository;
-import com.projeto.apibiblioteca.repositories.RentOrderRepository;
+import com.projeto.apibiblioteca.repositories.PurchaseOrderRepository;
 import com.projeto.apibiblioteca.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RentService {
+public class PurchaseService {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,19 +22,15 @@ public class RentService {
     private BookRepository bookRepository;
 
     @Autowired
-    private RentOrderRepository rentOrderRepository;
+    private PurchaseOrderRepository purchaseOrderRepository;
 
-    public void processRental(OrderRequest request) {
+    public void processPurchase(OrderRequest request) {
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
         List<Book> books = bookRepository.findAllById(request.bookIds());
 
-        if (request.withdrawDate() == null || request.returnDate() == null) {
-            throw new IllegalArgumentException("Datas de retirada e devolução são obrigatórias para aluguel");
-        }
-
-        RentOrder rentOrder = new RentOrder(user, books, request.type(), request.withdrawDate(), request.returnDate());
-        rentOrderRepository.save(rentOrder);
+        PurchaseOrder purchaseOrder = new PurchaseOrder(user, books, request.type());
+        purchaseOrderRepository.save(purchaseOrder);
     }
 }

@@ -1,8 +1,8 @@
 package com.projeto.apibiblioteca.entities;
 
-
+import com.projeto.apibiblioteca.enums.BookConservation;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -35,14 +35,15 @@ public class Book {
     private Integer quantity;
 
     @Column(nullable = false)
-    private String conservation;
+    @Enumerated(EnumType.STRING)
+    private BookConservation conservation;
 
     //@Getter
     //@OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
     //private List<Assessment> assessments;
 
 
-    public Book(String title, String author, String description, String category, Double price, Integer quantity, String conservation) {
+    public Book(String title, String author, String description, String category, Double price, Integer quantity, BookConservation conservation) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -107,11 +108,11 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public String getConservation() {
+    public BookConservation getConservation() {
         return conservation;
     }
 
-    public void setConservation(String conservation) {
+    public void setConservation(BookConservation conservation) {
         this.conservation = conservation;
     }
 }
