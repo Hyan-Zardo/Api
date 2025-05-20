@@ -58,10 +58,16 @@ public class UserService {
     }
 
 
-    private void updateData(User user, UserRecord userRecord){
+    public void updateData(User user, UserRecord userRecord){
         user.setName(userRecord.name());
         user.setSurname(userRecord.surname());
         user.setEmail(userRecord.email());
+        user.setCpf(userRecord.cpf());
+    }
+
+    public User findById(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado com id: " + id));
     }
 
 }

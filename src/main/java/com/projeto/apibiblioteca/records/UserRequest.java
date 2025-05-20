@@ -1,8 +1,14 @@
 package com.projeto.apibiblioteca.records;
 
-public record UserRequest(String name,
+import com.projeto.apibiblioteca.enums.UserRole;
+
+import java.util.UUID;
+
+public record UserRequest(UUID id,
+                          String name,
                           String surname,
                           String email,
                           String password,
-                          boolean isAdmin){
+                          String cpf,
+                          UserRole role){
 }

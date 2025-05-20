@@ -14,9 +14,7 @@ public interface UserMapper {
     UserRecord toUserRecord(User user);
     User toUser(UserRecord userRecord);
 
-    @Mapping(target = "isAdmin", source = "admin")
     UserRequest toUserRequest(User user);
 
-    @Mapping(target = "admin", source = "isAdmin")
     User toUser(UserRequest userRequest);
 }

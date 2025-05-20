@@ -4,7 +4,6 @@ import com.projeto.apibiblioteca.entities.User;
 import com.projeto.apibiblioteca.mappers.UserMapper;
 import com.projeto.apibiblioteca.records.UserRecord;
 import com.projeto.apibiblioteca.records.UserRequest;
-import com.projeto.apibiblioteca.repositories.UserRepository;
 import com.projeto.apibiblioteca.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +19,9 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService service;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    public UserController() {}
 
     @PostMapping
     public ResponseEntity<UserRequest> addUser(@RequestBody UserRequest userRequest) {
@@ -49,8 +43,16 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletUser(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") UUID id){
         service.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<UserRecord> updateUser(@RequestBody UserRecord userRecord) {
+        User user = UserMapper.INSTANCE.toUser(userRecord);
+        service.updateUser(userRecord, user.getId());
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(userRecord);
     }
 }

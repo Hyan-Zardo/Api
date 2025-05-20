@@ -21,14 +21,9 @@ import java.util.UUID;
 public class BookController {
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     private BookService service;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    public BookController() {}
 
     @PostMapping
     public ResponseEntity<BookRecord> addBook(@RequestBody BookRecord bookRecord) {
@@ -47,12 +42,13 @@ public class BookController {
     @GetMapping("/search")
     public ResponseEntity<List<BookRecord>> searchBooks(
             @RequestParam(required = false) String title,
+            @RequestParam(required = false) String isbn,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) BookConservation conservation,
             @RequestParam(required = false) Integer quantity){
 
-        return ResponseEntity.ok(service.searchBooks(title, category, author, conservation, quantity));
+        return ResponseEntity.ok(service.searchBooks(title, isbn, category, author, conservation, quantity));
     }
 
     @DeleteMapping("{id}")
@@ -60,4 +56,13 @@ public class BookController {
         service.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<BookRecord> updateBook(@RequestBody BookRecord bookRecord) {
+        Book book = BookMapper.INSTANCE.toBook(bookRecord);
+        service.updateBook(bookRecord, book.getId());
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();
+        return ResponseEntity.created(uri).body(bookRecord);
+    }
+
 }

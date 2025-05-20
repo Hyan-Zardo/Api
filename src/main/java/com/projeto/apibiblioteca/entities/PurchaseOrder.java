@@ -10,16 +10,16 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "purchase_orders")
+//@Table(name = "purchase_orders")
 public class PurchaseOrder extends Order {
 
     @Column (nullable = false)
     private Double totalPrice;
 
-    public PurchaseOrder(User user, List<Book> books, OrderType type) {
+    public PurchaseOrder(User user, List<Book> books) {
         super(user, books);
         this.totalPrice = books.stream().mapToDouble(Book::getPrice).sum();
-        setOrderType(type);
+        setOrderType(OrderType.COMPRA);
         setOrderDate(Instant.now());
         setStatus(OrderStatus.ESPERANDO_PAGAMENTO);
     }

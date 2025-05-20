@@ -1,6 +1,7 @@
 package com.projeto.apibiblioteca.services;
 
 import com.projeto.apibiblioteca.entities.Book;
+import com.projeto.apibiblioteca.entities.User;
 import com.projeto.apibiblioteca.enums.BookConservation;
 import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.records.BookRecord;
@@ -49,17 +50,18 @@ public class BookService {
         }
     }
 
-    public List<BookRecord> searchBooks(String title, String category, String author, BookConservation conservation, Integer quantity) {
-        List<Book> books = bookRepository.findByTitleOrCategoryOrAuthorOrConservationOrQuantity(title, category, author, conservation, quantity);
+    public List<BookRecord> searchBooks(String title, String isbn, String category, String author, BookConservation conservation, Integer quantity) {
+        List<Book> books = bookRepository.findByFilters(title, isbn, category, author, conservation, quantity);
         if (books.isEmpty()){
             throw new NotFoundException("Livro não encontrado");
         }
         return books.stream().map(BookMapper.INSTANCE::toBookRecord).collect(Collectors.toList());
     }
 
-    private void updateData(Book book, BookRecord bookRecord){
+    public void updateData(Book book, BookRecord bookRecord){
         book.setTitle(bookRecord.title());
         book.setAuthor(bookRecord.author());
+        book.setISBN(bookRecord.isbn());
         book.setDescription(bookRecord.description());
         book.setCategory(bookRecord.category());
         book.setPrice(bookRecord.price());
@@ -67,5 +69,9 @@ public class BookService {
         book.setConservation(bookRecord.conservation());
     }
 
+    public Book findById(UUID id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Livro não encontrado com id: " + id));
+    }
 
 }

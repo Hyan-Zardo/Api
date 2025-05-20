@@ -24,6 +24,9 @@ public class Book {
     @Column(nullable = false)
     private String author;
 
+    @Column(nullable = false)
+    private String isbn;
+
     private String description;
 
     private String category;
@@ -43,9 +46,10 @@ public class Book {
     //private List<Assessment> assessments;
 
 
-    public Book(String title, String author, String description, String category, Double price, Integer quantity, BookConservation conservation) {
+    public Book(String title, String author, String isbn, String description, String category, Double price, Integer quantity, BookConservation conservation) {
         this.title = title;
         this.author = author;
+        this.isbn = isbn;
         this.description = description;
         this.category = category;
         this.price = price;
@@ -67,6 +71,10 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getISBN() {return isbn;}
+
+    public void setISBN(String isbn) {this.isbn = isbn;}
 
     public String getAuthor() {
         return author;
