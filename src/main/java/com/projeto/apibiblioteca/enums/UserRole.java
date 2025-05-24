@@ -1,7 +1,18 @@
 package com.projeto.apibiblioteca.enums;
 
 public enum UserRole {
-    ROLE_USER,
-    ROLE_ADMIN
+    ADMIN("admin"),
+    USER("user");
+
+    private String role;
+
+    UserRole(String role){
+        this.role = role;
+    }
+
+    public String getRole(){
+        return role;
+    }
+
 }
 

@@ -47,13 +47,10 @@ public class UserService {
         }
     }
 
-    public UserRecord searchUser(String email, String name) {
+    public UserRecord searchUser(String name) {
         User user;
-        if (email != null) {
-            user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
-        } else {
-            user = userRepository.findByName(name).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
-        }
+        user = userRepository.findByName(name).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+
         return UserMapper.INSTANCE.toUserRecord(user);
     }
 

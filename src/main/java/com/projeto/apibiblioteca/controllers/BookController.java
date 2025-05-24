@@ -58,7 +58,7 @@ public class BookController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookRecord> updateBook(@RequestBody BookRecord bookRecord) {
+    public ResponseEntity<BookRecord> updateBook(@PathVariable("id") UUID id, @RequestBody BookRecord bookRecord) {
         Book book = BookMapper.INSTANCE.toBook(bookRecord);
         service.updateBook(bookRecord, book.getId());
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();

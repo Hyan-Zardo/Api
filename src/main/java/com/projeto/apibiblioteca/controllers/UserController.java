@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<UserRecord> searchUser(@RequestParam(required = false) String email, @RequestParam(required = false) String name) {
-        return ResponseEntity.ok(service.searchUser(email, name));
+    public ResponseEntity<UserRecord> searchUser(@RequestParam(required = false) String name) {
+        return ResponseEntity.ok(service.searchUser(name));
     }
 
     @DeleteMapping("{id}")
