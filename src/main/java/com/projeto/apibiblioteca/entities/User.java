@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @Version
     private Integer version = 0;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     private String surname;

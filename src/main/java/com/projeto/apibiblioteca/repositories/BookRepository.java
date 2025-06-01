@@ -15,7 +15,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     @Query("""
     SELECT b FROM Book b
     WHERE (:title IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%')))
-      AND (:isbn IS NULL OR LOWER(b.isbn) LIKE LOWER(CONCAT('%', :isbn, '%')))
+      AND (:isbn IS NULL OR b.isbn = :isbn)
       AND (:category IS NULL OR LOWER(b.category) LIKE LOWER(CONCAT('%', :category, '%')))
       AND (:author IS NULL OR LOWER(b.author) LIKE LOWER(CONCAT('%', :author, '%')))
       AND (:conservation IS NULL OR b.conservation = :conservation)
