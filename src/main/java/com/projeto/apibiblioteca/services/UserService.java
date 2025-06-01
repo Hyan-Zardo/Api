@@ -34,10 +34,10 @@ public class UserService {
         }
     }
 
-    public void updateUser(UserRecord userRecord, UUID userId){
+    public void updateUser(UserRequest userRequest, UUID userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
-        updateData(user, userRecord);
+        updateData(user, userRequest);
         userRepository.save(user);
     }
 
@@ -63,11 +63,12 @@ public class UserService {
     }
 
 
-    public void updateData(User user, UserRecord userRecord){
-        user.setName(userRecord.name());
-        user.setSurname(userRecord.surname());
-        user.setEmail(userRecord.email());
-        user.setCpf(userRecord.cpf());
+    public void updateData(User user, UserRequest userRequest){
+        user.setName(userRequest.name());
+        user.setSurname(userRequest.surname());
+        user.setEmail(userRequest.email());
+        user.setCpf(userRequest.cpf());
+        user.setPassword(userRequest.password());
     }
 
     public User findById(UUID id) {

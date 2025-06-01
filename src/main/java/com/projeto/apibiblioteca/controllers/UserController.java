@@ -50,10 +50,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserRecord> updateUser(@RequestBody UserRecord userRecord) {
-        User user = UserMapper.INSTANCE.toUser(userRecord);
-        service.updateUser(userRecord, user.getId());
+    public ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userRequest) {
+        User user = UserMapper.INSTANCE.toUser(userRequest);
+        service.updateUser(userRequest, user.getId());
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(userRecord);
+        return ResponseEntity.created(uri).body(userRequest);
     }
 }
