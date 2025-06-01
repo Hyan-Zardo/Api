@@ -42,7 +42,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTCreationException exception){
-            return "";
+            return null;
         }
     }
 
