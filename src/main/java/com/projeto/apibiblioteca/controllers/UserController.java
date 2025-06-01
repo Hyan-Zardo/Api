@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<UserRecord> searchUser(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<UserRecord>> searchUser(@RequestParam(required = false) String name) {
         return ResponseEntity.ok(service.searchUser(name));
     }
 

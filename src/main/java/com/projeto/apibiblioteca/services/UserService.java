@@ -1,7 +1,9 @@
 package com.projeto.apibiblioteca.services;
 
+import com.projeto.apibiblioteca.entities.Book;
 import com.projeto.apibiblioteca.entities.User;
 import com.projeto.apibiblioteca.exceptions.NotFoundException;
+import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.mappers.UserMapper;
 import com.projeto.apibiblioteca.records.UserRecord;
 import com.projeto.apibiblioteca.records.UserRequest;
@@ -9,7 +11,9 @@ import com.projeto.apibiblioteca.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -47,11 +51,15 @@ public class UserService {
         }
     }
 
-    public UserRecord searchUser(String name) {
-        User user;
-        user = userRepository.findByName(name).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+    public List<UserRecord> searchUser(String name) {
+        List<User> users = userRepository.findByNameContaining(name);
 
-        return UserMapper.INSTANCE.toUserRecord(user);
+        if (users.isEmpty()){
+            throw new NotFoundException("Livro não encontrado");
+        }
+        return users.stream().map(UserMapper.INSTANCE::toUserRecord).collect(Collectors.toList());
+
+
     }
 
 
