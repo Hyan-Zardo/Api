@@ -14,10 +14,10 @@ import java.util.UUID;
 public interface BookRepository extends JpaRepository<Book, UUID> {
     @Query("""
     SELECT b FROM Book b
-    WHERE (:title IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%')))
+    WHERE (:category IS NULL OR b.category = :category)
       AND (:isbn IS NULL OR b.isbn = :isbn)
-      AND (:category IS NULL OR LOWER(b.category) LIKE LOWER(CONCAT('%', :category, '%')))
-      AND (:author IS NULL OR LOWER(b.author) LIKE LOWER(CONCAT('%', :author, '%')))
+      AND (:category IS NULL OR b.category = :category)
+      AND (:author IS NULL OR b.author = :author)
       AND (:conservation IS NULL OR b.conservation = :conservation)
       AND (:quantity IS NULL OR b.quantity = :quantity)
 """)
