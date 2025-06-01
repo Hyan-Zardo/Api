@@ -26,7 +26,6 @@ public class BookController {
 
     public BookController() {}
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<BookRecord> addBook(@RequestBody BookRecord bookRecord) {
         Book book = BookMapper.INSTANCE.toBook(bookRecord);
