@@ -8,6 +8,7 @@ import com.projeto.apibiblioteca.repositories.BookRepository;
 import com.projeto.apibiblioteca.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,6 +26,7 @@ public class BookController {
 
     public BookController() {}
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<BookRecord> addBook(@RequestBody BookRecord bookRecord) {
         Book book = BookMapper.INSTANCE.toBook(bookRecord);
