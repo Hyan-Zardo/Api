@@ -2,7 +2,6 @@ package com.projeto.apibiblioteca.entities;
 
 import com.projeto.apibiblioteca.enums.BookConservation;
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.UUID;
 
@@ -72,9 +71,9 @@ public class Book {
         this.title = title;
     }
 
-    public String getISBN() {return isbn;}
+    public String getIsbn() {return isbn;}
 
-    public void setISBN(String isbn) {this.isbn = isbn;}
+    public void setIsbn(String isbn) {this.isbn = isbn;}
 
     public String getAuthor() {
         return author;
