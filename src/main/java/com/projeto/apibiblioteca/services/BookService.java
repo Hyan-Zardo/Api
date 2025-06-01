@@ -61,7 +61,7 @@ public class BookService {
     public void updateData(Book book, BookRecord bookRecord){
         book.setTitle(bookRecord.title());
         book.setAuthor(bookRecord.author());
-        book.setISBN(bookRecord.isbn());
+        book.setIsbn(bookRecord.isbn());
         book.setDescription(bookRecord.description());
         book.setCategory(bookRecord.category());
         book.setPrice(bookRecord.price());
