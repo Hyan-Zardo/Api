@@ -51,14 +51,13 @@ public class UserService {
         }
     }
 
-    public List<UserRecord> searchUser(String name) {
+    public List<UserRequest> searchUser(String name) {
         List<User> users = userRepository.findByNameContaining(name);
 
         if (users.isEmpty()){
             throw new NotFoundException("Livro não encontrado");
         }
-        return users.stream().map(UserMapper.INSTANCE::toUserRecord).collect(Collectors.toList());
-
+        return users.stream().map(UserMapper.INSTANCE::toUserRequest).collect(Collectors.toList());
 
     }
 

@@ -67,6 +67,7 @@ public class BookService {
         book.setPrice(bookRecord.price());
         book.setQuantity(bookRecord.quantity());
         book.setConservation(bookRecord.conservation());
+        book.setImageUrl(bookRecord.imageUrl());
     }
 
     public Book findById(UUID id) {

@@ -40,12 +40,15 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookConservation conservation;
 
+    @Column(nullable = false)
+    private String imageUrl;
+
     //@Getter
     //@OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
     //private List<Assessment> assessments;
 
 
-    public Book(String title, String author, String isbn, String description, String category, Double price, Integer quantity, BookConservation conservation) {
+    public Book(String title, String author, String isbn, String description, String category, Double price, Integer quantity, BookConservation conservation, String imageUrl) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
@@ -54,6 +57,7 @@ public class Book {
         this.price = price;
         this.quantity = quantity;
         this.conservation = conservation;
+        this.imageUrl = imageUrl;
     }
 
     public Book() {
@@ -122,4 +126,8 @@ public class Book {
     public void setConservation(BookConservation conservation) {
         this.conservation = conservation;
     }
+
+    public String getImageUrl() { return imageUrl; }
+
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }

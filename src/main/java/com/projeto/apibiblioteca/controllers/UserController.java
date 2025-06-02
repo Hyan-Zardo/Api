@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserRecord>> searchUser(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<UserRequest>> searchUser(@RequestParam(required = false) String name) {
         return ResponseEntity.ok(service.searchUser(name));
     }
 
