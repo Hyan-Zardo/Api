@@ -26,7 +26,6 @@ public class Book {
     @Column(nullable = false)
     private String isbn;
 
-    @Lob
     private String description;
 
     private String category;
