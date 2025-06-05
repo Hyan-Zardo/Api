@@ -55,12 +55,11 @@ public class UserService {
         List<User> users = userRepository.findByNameContaining(name);
 
         if (users.isEmpty()){
-            throw new NotFoundException("Livro não encontrado");
+            throw new NotFoundException("Usuário não encontrado");
         }
         return users.stream().map(UserMapper.INSTANCE::toUserRequest).collect(Collectors.toList());
 
     }
-
 
     public void updateData(User user, UserRequest userRequest){
         user.setName(userRequest.name());
