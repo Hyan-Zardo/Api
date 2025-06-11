@@ -41,8 +41,8 @@ public class User implements UserDetails {
 
     private String cpf;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-//    private List<Order> orders;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<Order> orders;
 
     public User() {
     }
