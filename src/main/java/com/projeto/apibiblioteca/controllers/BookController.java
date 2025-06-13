@@ -4,18 +4,15 @@ import com.projeto.apibiblioteca.entities.Book;
 import com.projeto.apibiblioteca.enums.BookConservation;
 import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.records.BookRecord;
-import com.projeto.apibiblioteca.repositories.BookRepository;
 import com.projeto.apibiblioteca.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-
 
 @RestController
 @RequestMapping("/books")
@@ -60,10 +57,8 @@ public class BookController {
 
     @PutMapping("{id}")
     public ResponseEntity<BookRecord> updateBook(@PathVariable("id") UUID id, @RequestBody BookRecord bookRecord) {
-        Book book = BookMapper.INSTANCE.toBook(bookRecord);
-        service.updateBook(bookRecord, book.getId());
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();
-        return ResponseEntity.created(uri).body(bookRecord);
+        service.updateBook(bookRecord, id);
+        return ResponseEntity.noContent().build();
     }
 
 }
