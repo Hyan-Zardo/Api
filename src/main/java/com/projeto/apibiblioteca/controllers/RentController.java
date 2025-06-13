@@ -78,9 +78,7 @@ public class RentController {
 
     @PutMapping("{id}")
     public ResponseEntity<OrderResponse> updateOrder(@RequestBody OrderResponse orderResponse) {
-        RentOrder order = OrderMapper.INSTANCE.toRentOrder(orderResponse);
-        service.updateOrder(orderResponse, order.getId());
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(orderResponse.id()).toUri();
-        return ResponseEntity.created(uri).body(orderResponse);
+        service.updateOrder(orderResponse, orderResponse.id());
+        return ResponseEntity.noContent().build();
     }
 }

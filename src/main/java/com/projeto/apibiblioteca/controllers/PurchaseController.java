@@ -75,10 +75,8 @@ public class PurchaseController {
 
     @PutMapping("{id}")
     public ResponseEntity<OrderResponse> updateOrder(@RequestBody OrderResponse orderResponse) {
-        PurchaseOrder order = OrderMapper.INSTANCE.toPurchaseOrder(orderResponse);
-        service.updateOrder(orderResponse, order.getId());
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(orderResponse.id()).toUri();
-        return ResponseEntity.created(uri).body(orderResponse);
+        service.updateOrder(orderResponse, orderResponse.id());
+        return ResponseEntity.noContent().build();
     }
 
 }

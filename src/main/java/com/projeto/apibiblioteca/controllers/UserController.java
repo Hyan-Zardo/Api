@@ -51,9 +51,7 @@ public class UserController {
 
     @PutMapping("{id}")
     public ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userRequest) {
-        User user = UserMapper.INSTANCE.toUser(userRequest);
-        service.updateUser(userRequest, user.getId());
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(userRequest);
+        service.updateUser(userRequest, userRequest.id());
+        return ResponseEntity.noContent().build();
     }
 }
