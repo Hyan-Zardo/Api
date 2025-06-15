@@ -6,7 +6,13 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class DashRepositoryImpl implements DashRepository {
@@ -16,6 +22,7 @@ public class DashRepositoryImpl implements DashRepository {
 
     @Override
     public List<DashboardResponse.DateQuantity> findDailyStatsBetweenDates(Instant start, Instant end) {
+
         String sql = """
             SELECT 
                 to_char(date_trunc('day', o.order_date), 'YYYY-MM-DD') as date,
@@ -31,10 +38,26 @@ public class DashRepositoryImpl implements DashRepository {
                 .setParameter("end", end)
                 .getResultList();
 
-        return results.stream()
-                .map(r -> new DashboardResponse.DateQuantity(
-                        (String) r[0],
-                        ((Number) r[1]).intValue()))
-                .toList();
+
+        Map<String, Integer> ordersByDate = results.stream()
+                .collect(Collectors.toMap(
+                        row -> (String) row[0],
+                        row -> ((Number) row[1]).intValue()
+                ));
+
+
+        List<DashboardResponse.DateQuantity> allDays = new ArrayList<>();
+        LocalDate currentDate = start.atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = end.atZone(ZoneId.systemDefault()).toLocalDate();
+
+        while (!currentDate.isAfter(endDate)) {
+            String dateKey = currentDate.format(DateTimeFormatter.ISO_DATE);
+            int quantity = ordersByDate.getOrDefault(dateKey, 0);
+
+            allDays.add(new DashboardResponse.DateQuantity(dateKey, quantity));
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return allDays;
     }
 }

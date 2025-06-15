@@ -28,16 +28,17 @@ public class DashboardService {
     @Autowired
     private DashRepository dashRepository;
 
-    @Cacheable("dashboardData")
     public DashboardResponse getDashboardData(LocalDate startDate, LocalDate endDate) {
 
         if (startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException("Data inicial não pode ser após data final");
+            throw new IllegalArgumentException("A data inicial deve ser anterior à data final.");
         }
+
 
         long totalUsers = userRepository.count();
         long totalBooks = bookRepository.count();
         long totalOrders = orderRepository.count();
+
 
         List<DashboardResponse.DateQuantity> dailyStats = dashRepository.findDailyStatsBetweenDates(
                 startDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
