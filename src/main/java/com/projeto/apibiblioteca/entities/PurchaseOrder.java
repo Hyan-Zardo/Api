@@ -18,7 +18,7 @@ public class PurchaseOrder extends Order {
     public PurchaseOrder(User user, List<Book> books) {
         super(user, books);
         this.totalPrice = books.stream().mapToDouble(Book::getPrice).sum();
-        setUserName(user.getUsername());
+        setUserName(user.getName());
         setOrderType(OrderType.COMPRA);
         setOrderDate(Instant.now());
         setStatus(OrderStatus.ESPERANDO_PAGAMENTO);
