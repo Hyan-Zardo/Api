@@ -22,7 +22,7 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderRepositoryCusto
     private EntityManager entityManager;
 
     @Override
-    public List<PurchaseOrder> findByFilters(User user, Instant orderDate, OrderStatus orderStatus, OrderType orderType, Book book) {
+    public List<PurchaseOrder> findByFilters(User user, Instant orderDate, OrderStatus orderStatus, OrderType orderType, Book book, String userName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PurchaseOrder> query = cb.createQuery(PurchaseOrder.class);
         Root<PurchaseOrder> root = query.from(PurchaseOrder.class);
@@ -31,6 +31,10 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderRepositoryCusto
 
         if (user != null) {
             predicates.add(cb.equal(root.get("user"), user));
+        }
+
+        if (userName != null) {
+            predicates.add(cb.equal(root.get("userName"), userName));
         }
 
         if (orderDate != null) {
