@@ -26,6 +26,7 @@ public class Book {
     @Column(nullable = false)
     private String isbn;
 
+    @Column(length = 2000)
     private String description;
 
     private String category;
