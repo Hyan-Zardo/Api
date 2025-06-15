@@ -1,6 +1,7 @@
 package com.projeto.apibiblioteca.services;
 
 import com.projeto.apibiblioteca.entities.User;
+import com.projeto.apibiblioteca.enums.UserRole;
 import com.projeto.apibiblioteca.exceptions.NotFoundException;
 import com.projeto.apibiblioteca.mappers.UserMapper;
 import com.projeto.apibiblioteca.records.UserRecord;
@@ -49,8 +50,8 @@ public class UserService {
         }
     }
 
-    public List<UserRequest> searchUser(String name) {
-        List<User> users = userRepository.findByNameContaining(name);
+    public List<UserRequest> searchUser(String name, String email, UserRole role) {
+        List<User> users = userRepository.findByFilters(name, email, role);
 
         if (users.isEmpty()){
             throw new NotFoundException("Usuário não encontrado");

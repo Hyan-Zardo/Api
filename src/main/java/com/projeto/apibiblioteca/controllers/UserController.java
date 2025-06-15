@@ -1,6 +1,7 @@
 package com.projeto.apibiblioteca.controllers;
 
 import com.projeto.apibiblioteca.entities.User;
+import com.projeto.apibiblioteca.enums.UserRole;
 import com.projeto.apibiblioteca.mappers.UserMapper;
 import com.projeto.apibiblioteca.records.UserRecord;
 import com.projeto.apibiblioteca.records.UserRequest;
@@ -39,8 +40,11 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserRequest>> searchUser(@RequestParam(required = false) String name) {
-        return ResponseEntity.ok(service.searchUser(name));
+    public ResponseEntity<List<UserRequest>> searchUser
+            (@RequestParam(required = false) String name,
+             @RequestParam(required = false) String email,
+             @RequestParam(required = false) UserRole role) {
+        return ResponseEntity.ok(service.searchUser(name, email, role));
     }
 
     @DeleteMapping("{id}")
