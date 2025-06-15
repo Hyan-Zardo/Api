@@ -44,12 +44,14 @@ public class Book {
     @Column(nullable = false)
     private String imageUrl;
 
+    private String identify;
+
     //@Getter
     //@OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
     //private List<Assessment> assessments;
 
 
-    public Book(String title, String author, String isbn, String description, String category, Double price, Integer quantity, BookConservation conservation, String imageUrl) {
+    public Book(String title, String author, String isbn, String description, String category, Double price, Integer quantity, BookConservation conservation, String imageUrl, String identify) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
@@ -59,6 +61,7 @@ public class Book {
         this.quantity = quantity;
         this.conservation = conservation;
         this.imageUrl = imageUrl;
+        this.identify = identify;
     }
 
     public Book() {
@@ -131,4 +134,6 @@ public class Book {
     public String getImageUrl() { return imageUrl; }
 
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public String getIdentify() { return identify; }
+    public void setIdentify(String identify) { this.identify = identify; }
 }

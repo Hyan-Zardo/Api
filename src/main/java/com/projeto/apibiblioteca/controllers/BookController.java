@@ -44,9 +44,10 @@ public class BookController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) BookConservation conservation,
-            @RequestParam(required = false) Integer quantity){
+            @RequestParam(required = false) Integer quantity,
+            @RequestParam(required = false) String identify){
 
-        return ResponseEntity.ok(service.searchBooks(title, isbn, category, author, conservation, quantity));
+        return ResponseEntity.ok(service.searchBooks(title, isbn, category, author, conservation, quantity, identify));
     }
 
     @DeleteMapping("{id}")

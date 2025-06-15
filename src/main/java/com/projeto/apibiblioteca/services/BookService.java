@@ -50,8 +50,8 @@ public class BookService {
         }
     }
 
-    public List<BookRecord> searchBooks(String title, String isbn, String category, String author, BookConservation conservation, Integer quantity) {
-        List<Book> books = bookRepository.findByFilters(title, isbn, category, author, conservation, quantity);
+    public List<BookRecord> searchBooks(String title, String isbn, String category, String author, BookConservation conservation, Integer quantity, String identify) {
+        List<Book> books = bookRepository.findByFilters(title, isbn, category, author, conservation, quantity, identify);
         if (books.isEmpty()){
             throw new NotFoundException("Livro não encontrado");
         }

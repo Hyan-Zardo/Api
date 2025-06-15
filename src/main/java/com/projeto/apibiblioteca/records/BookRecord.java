@@ -13,5 +13,6 @@ public record BookRecord(UUID id,
                          Double price,
                          Integer quantity,
                          BookConservation conservation,
-                         String imageUrl){
+                         String imageUrl,
+                         String identify   ){
 }

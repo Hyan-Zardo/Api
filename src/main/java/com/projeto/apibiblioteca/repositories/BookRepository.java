@@ -20,6 +20,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
         AND (COALESCE(:author, '') = '' OR UPPER(b.author) LIKE UPPER(CONCAT('%', :author, '%')))
         AND (:conservation IS NULL OR b.conservation = :conservation)
         AND (:quantity IS NULL OR b.quantity = :quantity)
+        AND (COALESCE(:identify, '') = '' OR UPPER(b.identify) LIKE UPPER(CONCAT('%', :identify, '%')))
 """)
     List<Book> findByFilters(
             @Param("title") String title,
@@ -27,7 +28,8 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
             @Param("category") String category,
             @Param("author") String author,
             @Param("conservation") BookConservation conservation,
-            @Param("quantity") Integer quantity
+            @Param("quantity") Integer quantity,
+            @Param("identify") String identify
     );
 
 }
