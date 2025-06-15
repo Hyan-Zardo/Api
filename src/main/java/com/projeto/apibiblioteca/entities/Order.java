@@ -39,12 +39,15 @@ public abstract class Order {
 
     private String userName;
 
+    private String bookTitle;
+
     public Order(User user, List<Book> books) {
         this.user = user;
         this.books = books;
         this.orderDate = Instant.now();
         this.status = OrderStatus.ESPERANDO_PAGAMENTO;
         this.userName = user.getName();
+        bookTitle = books.get(0).getTitle();
     }
 
     public Order() {}
@@ -69,4 +72,6 @@ public abstract class Order {
     public void setOrderType(OrderType type) { this.orderType = type; }
     public String getUserName() { return userName; }
     public void setUserName(String userName) { this.userName = userName; }
+    public String getBookTitle() { return bookTitle; }
+    public void setBookTitle(String bookTitle) { this.bookTitle = bookTitle; }
 }

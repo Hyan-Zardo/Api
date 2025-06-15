@@ -56,9 +56,10 @@ public class PurchaseService {
             OrderStatus orderStatus,
             OrderType orderType,
             Book book,
-            String userName
+            String userName,
+            String bookTitle
     ) {
-        List<PurchaseOrder> orders = orderRepository.findByFilters(user, orderDate, orderStatus, orderType, book, user.getName());
+        List<PurchaseOrder> orders = orderRepository.findByFilters(user, orderDate, orderStatus, orderType, book, userName, bookTitle);
 
         if (orders.isEmpty()) {
             throw new NotFoundException("Nenhum pedido correspondente.");

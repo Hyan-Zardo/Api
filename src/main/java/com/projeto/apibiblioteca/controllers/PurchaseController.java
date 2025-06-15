@@ -56,13 +56,14 @@ public class PurchaseController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant orderDate,
             @RequestParam(required = false) OrderStatus orderStatus,
             @RequestParam(required = false) OrderType orderType,
-            @RequestParam(required = false) String userName
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String bookTitle
     ) {
         User user = (userId != null) ? userService.findById(userId) : null;
         Book book = (bookId != null) ? bookService.findById(bookId) : null;
 
         List<OrderResponse> orders = service.searchOrder(
-                user, orderDate, orderStatus, orderType, book, userName
+                user, orderDate, orderStatus, orderType, book, userName, bookTitle
         );
 
         return ResponseEntity.ok(orders);

@@ -15,5 +15,6 @@ public interface PurchaseOrderRepositoryCustom {
                                       OrderStatus orderStatus,
                                       OrderType orderType,
                                       Book book,
-                                      String userName);
+                                      String userName,
+                                      String bookTitle);
 }

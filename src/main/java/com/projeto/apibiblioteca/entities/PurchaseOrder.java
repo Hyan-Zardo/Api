@@ -22,6 +22,7 @@ public class PurchaseOrder extends Order {
         setOrderType(OrderType.COMPRA);
         setOrderDate(Instant.now());
         setStatus(OrderStatus.ESPERANDO_PAGAMENTO);
+        setBookTitle(books.get(0).getTitle());
     }
 
     public PurchaseOrder() {}
