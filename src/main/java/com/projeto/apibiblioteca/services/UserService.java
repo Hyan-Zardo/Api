@@ -1,9 +1,7 @@
 package com.projeto.apibiblioteca.services;
 
-import com.projeto.apibiblioteca.entities.Book;
 import com.projeto.apibiblioteca.entities.User;
 import com.projeto.apibiblioteca.exceptions.NotFoundException;
-import com.projeto.apibiblioteca.mappers.BookMapper;
 import com.projeto.apibiblioteca.mappers.UserMapper;
 import com.projeto.apibiblioteca.records.UserRecord;
 import com.projeto.apibiblioteca.records.UserRequest;

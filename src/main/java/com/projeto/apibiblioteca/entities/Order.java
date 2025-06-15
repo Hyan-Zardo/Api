@@ -5,7 +5,6 @@ import com.projeto.apibiblioteca.enums.OrderType;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,11 +37,14 @@ public abstract class Order {
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
+    private String userName;
+
     public Order(User user, List<Book> books) {
         this.user = user;
         this.books = books;
         this.orderDate = Instant.now();
         this.status = OrderStatus.ESPERANDO_PAGAMENTO;
+        this.userName = user.getName();
     }
 
     public Order() {}
@@ -65,4 +67,6 @@ public abstract class Order {
     }
     public void setOrderDate(Instant orderDate) { this.orderDate = orderDate; }
     public void setOrderType(OrderType type) { this.orderType = type; }
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 }

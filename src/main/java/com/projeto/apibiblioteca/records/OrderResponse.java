@@ -15,5 +15,6 @@ public record OrderResponse(
         OrderStatus orderStatus,
         LocalDate withdrawDate,
         LocalDate returnDate,
-        Double totalPrice
+        Double totalPrice,
+        String useraName
 ) {}

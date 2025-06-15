@@ -4,7 +4,6 @@ import com.projeto.apibiblioteca.enums.OrderStatus;
 import com.projeto.apibiblioteca.enums.OrderType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -29,6 +28,7 @@ public class RentOrder extends Order {
         this.withdrawDate = withdrawDate;
         this.returnDate = returnDate;
         this.totalPrice = calculateRentalPrice(books, withdrawDate, returnDate);
+        setUserName(user.getUsername());
         setOrderType(OrderType.ALUGUEL);
         setOrderDate(Instant.now());
         setStatus(OrderStatus.ESPERANDO_PAGAMENTO);

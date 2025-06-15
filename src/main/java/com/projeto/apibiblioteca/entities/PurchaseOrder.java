@@ -4,7 +4,6 @@ import com.projeto.apibiblioteca.enums.OrderStatus;
 import com.projeto.apibiblioteca.enums.OrderType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 import java.time.Instant;
 import java.util.List;
@@ -19,6 +18,7 @@ public class PurchaseOrder extends Order {
     public PurchaseOrder(User user, List<Book> books) {
         super(user, books);
         this.totalPrice = books.stream().mapToDouble(Book::getPrice).sum();
+        setUserName(user.getUsername());
         setOrderType(OrderType.COMPRA);
         setOrderDate(Instant.now());
         setStatus(OrderStatus.ESPERANDO_PAGAMENTO);
