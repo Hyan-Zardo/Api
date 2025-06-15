@@ -14,12 +14,12 @@ import java.util.UUID;
 public interface BookRepository extends JpaRepository<Book, UUID> {
     @Query("""
     SELECT b FROM Book b
-    WHERE (:title IS NULL OR LOWER(b.title) LIKE CONCAT('%', LOWER(:title), '%'))
-      AND (:isbn IS NULL OR b.isbn = :isbn)
-      AND (:category IS NULL OR LOWER(b.category) LIKE CONCAT('%', LOWER(:category), '%'))
-      AND (:author IS NULL OR LOWER(b.author) LIKE CONCAT('%', LOWER(:author), '%'))
-      AND (:conservation IS NULL OR b.conservation = :conservation)
-      AND (:quantity IS NULL OR b.quantity = :quantity)
+    WHERE (COALESCE(:title, '') = '' OR UPPER(b.title) LIKE UPPER(CONCAT('%', :title, '%')))
+        AND (COALESCE(:isbn, '') = '' OR b.isbn = :isbn)
+        AND (COALESCE(:category, '') = '' OR UPPER(b.category) LIKE UPPER(CONCAT('%', :category, '%')))
+        AND (COALESCE(:author, '') = '' OR UPPER(b.author) LIKE UPPER(CONCAT('%', :author, '%')))
+        AND (:conservation IS NULL OR b.conservation = :conservation)
+        AND (:quantity IS NULL OR b.quantity = :quantity)
 """)
     List<Book> findByFilters(
             @Param("title") String title,
