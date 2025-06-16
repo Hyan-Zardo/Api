@@ -17,5 +17,6 @@ public record OrderResponse(
         LocalDate returnDate,
         Double totalPrice,
         String userName,
-        String bookTitle
+        String bookTitle,
+        Integer quantity
 ) {}

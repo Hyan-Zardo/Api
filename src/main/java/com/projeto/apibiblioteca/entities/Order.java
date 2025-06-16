@@ -41,6 +41,9 @@ public abstract class Order {
 
     private String bookTitle;
 
+    @Column(nullable = false)
+    private Integer quantity = 1;
+
     public Order(User user, List<Book> books) {
         this.user = user;
         this.books = books;
@@ -74,4 +77,6 @@ public abstract class Order {
     public void setUserName(String userName) { this.userName = userName; }
     public String getBookTitle() { return bookTitle; }
     public void setBookTitle(String bookTitle) { this.bookTitle = bookTitle; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 }

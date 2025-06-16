@@ -8,5 +8,6 @@ public record OrderRequest(
         UUID userId,
         List<UUID> bookIds,
         LocalDate withdrawDate,
-        LocalDate returnDate
+        LocalDate returnDate,
+        Integer quantity
 ) {}

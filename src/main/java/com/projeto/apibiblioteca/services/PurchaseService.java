@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,16 +35,20 @@ public class PurchaseService {
     private PurchaseOrderRepository orderRepository;
 
     public PurchaseOrder processPurchase(OrderRequest request) {
+
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        List<Book> books = bookRepository.findAllById(request.bookIds());
+        Book book = bookRepository.findById(request.bookIds().get(0))
+                .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado"));
+
+        List<Book> books = Collections.nCopies(request.quantity(), book);
 
         PurchaseOrder purchaseOrder = new PurchaseOrder(user, books);
-        orderRepository.save(purchaseOrder);
-        return purchaseOrder;
-    }
+        purchaseOrder.setQuantity(request.quantity());
 
+        return orderRepository.save(purchaseOrder);
+    }
     public OrderResponse getOrderDetails(UUID id){
        PurchaseOrder order = orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
