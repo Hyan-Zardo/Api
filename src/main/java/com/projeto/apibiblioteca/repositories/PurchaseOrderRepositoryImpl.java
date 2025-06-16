@@ -11,6 +11,8 @@ import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +46,14 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderRepositoryCusto
         }
 
         if (orderDate != null) {
-            Instant start = orderDate.truncatedTo(ChronoUnit.SECONDS);
-            Instant end = start.plus(1, ChronoUnit.SECONDS);
-            predicates.add(cb.between(root.get("orderDate"), start, end));
+            LocalDate localDate = LocalDate.ofInstant(orderDate, ZoneOffset.UTC);
+
+            Instant startOfDayUtc = localDate.atStartOfDay(ZoneOffset.UTC).toInstant();
+            Instant endOfDayUtc = localDate.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+
+            predicates.add(cb.between(root.get("orderDate"), startOfDayUtc, endOfDayUtc));
         }
+
 
         if (orderStatus != null) {
             predicates.add(cb.equal(root.get("status"), orderStatus));
