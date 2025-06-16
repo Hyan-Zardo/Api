@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @RestController
 @RequestMapping("/dashboard")
 public class DashboardController {
+
+    private static final ZoneId BRAZIL_ZONE = ZoneId.of("America/Sao_Paulo");
 
     @Autowired
     private DashboardService dashboardService;
@@ -25,12 +29,17 @@ public class DashboardController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
         if (startDate == null) {
-            startDate = LocalDate.now().minusDays(7);
+            startDate = LocalDate.now(ZoneId.of("America/Sao_Paulo")).minusDays(7);
         }
         if (endDate == null) {
-            endDate = LocalDate.now();
+            endDate = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
         }
 
-        return ResponseEntity.ok(dashboardService.getDashboardData(startDate, endDate));
+        Instant startUtc = startDate.atStartOfDay(BRAZIL_ZONE).toInstant();
+        Instant endUtc = endDate.atTime(23, 59, 59).atZone(BRAZIL_ZONE).toInstant();
+
+        DashboardResponse response = dashboardService.getDashboardData(startUtc, endUtc);
+
+        return ResponseEntity.ok(response);
     }
 }

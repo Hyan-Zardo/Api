@@ -6,10 +6,9 @@ import com.projeto.apibiblioteca.repositories.DashRepository;
 import com.projeto.apibiblioteca.repositories.PurchaseOrderRepository;
 import com.projeto.apibiblioteca.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -28,23 +27,32 @@ public class DashboardService {
     @Autowired
     private DashRepository dashRepository;
 
-    public DashboardResponse getDashboardData(LocalDate startDate, LocalDate endDate) {
+    public DashboardResponse getDashboardData(Instant startUtc, Instant endUtc) {
 
-        if (startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException("A data inicial deve ser anterior à data final.");
+        if (startUtc.isAfter(endUtc)) {
+            throw new IllegalArgumentException("Data inicial deve ser anterior à data final");
         }
 
 
-        long totalUsers = userRepository.count();
-        long totalBooks = bookRepository.count();
-        long totalOrders = orderRepository.count();
+        List<DashboardResponse.DateQuantity> dailyStats = dashRepository.findDailyStatsBetweenDates(startUtc, endUtc);
 
 
-        List<DashboardResponse.DateQuantity> dailyStats = dashRepository.findDailyStatsBetweenDates(
-                startDate.atStartOfDay(ZoneId.systemDefault()).toInstant(),
-                endDate.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant()
+        List<DashboardResponse.DateQuantity> convertedStats = dailyStats.stream()
+                .map(stat -> {
+
+                    String brazilDate = Instant.parse(stat.date() + "T00:00:00Z")
+                            .atZone(ZoneId.of("America/Sao_Paulo"))
+                            .toLocalDate()
+                            .toString();
+                    return new DashboardResponse.DateQuantity(brazilDate, stat.quantity());
+                })
+                .toList();
+
+        return new DashboardResponse(
+                userRepository.count(),
+                bookRepository.count(),
+                orderRepository.count(),
+                convertedStats
         );
-
-        return new DashboardResponse(totalUsers, totalBooks, totalOrders, dailyStats);
     }
 }
