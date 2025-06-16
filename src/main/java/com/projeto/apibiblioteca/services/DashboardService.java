@@ -6,7 +6,6 @@ import com.projeto.apibiblioteca.repositories.DashRepository;
 import com.projeto.apibiblioteca.repositories.PurchaseOrderRepository;
 import com.projeto.apibiblioteca.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

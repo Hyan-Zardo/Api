@@ -42,6 +42,9 @@ public class PurchaseService {
         Book book = bookRepository.findById(request.bookIds().get(0))
                 .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado"));
 
+        book.setQuantity(book.getQuantity() - request.quantity());
+        bookRepository.save(book);
+
         List<Book> books = Collections.nCopies(request.quantity(), book);
 
         PurchaseOrder purchaseOrder = new PurchaseOrder(user, books);
