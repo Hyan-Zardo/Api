@@ -80,6 +80,14 @@ public class PurchaseService {
 
     public void deleteOrder(UUID orderId){
         if (orderRepository.existsById(orderId)){
+            PurchaseOrder order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado"));
+
+            Book book = bookRepository.findById(order.getBooks().getFirst().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado"));
+
+            book.setQuantity(book.getQuantity() + order.getQuantity());
+            bookRepository.save(book);
+
             orderRepository.deleteById(orderId);
         }else {
             throw new NotFoundException("Pedido não encontrado");
